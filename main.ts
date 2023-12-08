@@ -1,6 +1,16 @@
 const express = require('express')
 const pgp = require('pg-promise')
+
+const dbDetails = {
+    host: "postgres",
+    port: 5432,
+    database: 'sample',
+    user: 'postgres',
+    password: 'testPW'
+}
+
 const app = express()
+const db = pgp(dbDetails)
 const port = 3000
 
 app.use(express.json())
