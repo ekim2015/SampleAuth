@@ -1,6 +1,9 @@
 const express = require('express')
+const pgp = require('pg-promise')
 const app = express()
 const port = 3000
+
+app.use(express.json())
 
 // sample
 app.get('/', (req, res) => {
@@ -8,6 +11,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log("Sample authentication app listening on port ${port}")
+    console.log("Sample authentication app listening on port ${port}.")
 })
 
