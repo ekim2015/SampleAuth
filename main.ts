@@ -1,26 +1,24 @@
 const express = require('express')
-const pgp = require('pg-promise')
-
-const dbDetails = {
-    host: "postgres",
-    port: 5432,
-    database: 'sample',
-    user: 'postgres',
-    password: 'testPW'
-}
+const { db } = require('./dbInit.ts')
 
 const app = express()
-const db = pgp(dbDetails)
 const port = 3000
 
-app.use(express.json())
+const authRoutes = require("./auth/auth.ts")
 
-// sample
+app.use(express.json())
+app.use("/auth", authRoutes)
+
 app.get('/', (req, res) => {
     res.send("Hello world!")
 })
 
-app.listen(port, () => {
-    console.log("Sample authentication app listening on port ${port}.")
+// if endpoint does not exist
+app.use((req, res) => {
+    res.status(404)
+    res.send('Endpoint not found.')
 })
 
+app.listen(port, () => {
+    console.log(`Sample authentication app listening on port ${port}.`)
+})
