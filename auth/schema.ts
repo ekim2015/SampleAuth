@@ -14,6 +14,7 @@ const regSchema = z.object({
 })
 
 // create custom middleware to handle body validation
+// arrow function into route handler
 const regValidator = (schema) => async (req, res, next) => {
     // using schema, validate
     try {
@@ -26,5 +27,5 @@ const regValidator = (schema) => async (req, res, next) => {
     }
 }
 
-module.exports = { regValidator }
+module.exports = { regValidator, regSchema }
 
