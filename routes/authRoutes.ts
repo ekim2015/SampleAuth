@@ -3,7 +3,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 
 const db = require('../dbInit.ts')
-const { regValidator, regSchema } = require('./schema.ts')
+const { regValidator, regSchema } = require('../middleware/schema.ts)
 
 const router = express.Router()
 const privateKey = 'abc134834687234DG*AD*(*$62664'
