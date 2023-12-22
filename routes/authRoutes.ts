@@ -29,8 +29,9 @@ router.post('/register', async (req, res) => {
 
         // if we have one value
         let check = await db.any("SELECT * FROM accounts WHERE username = $1 OR email = $2", [username, email])
-        if (check) {
+        if (check.length > 0) {
             await res.status(401).send("Email or username already exists!")
+            return
         }
 
         // // use bcrypt to salt and hash password
@@ -48,14 +49,18 @@ router.post('/login', async (req, res) => {
         let body = req.body
 
         let pw = await db.any('SELECT password FROM accounts WHERE username=$1 OR email=$1', [body.username])
-        if (pw) {
-            let valid = await bcrypt.compare(body.password, pw)
-            if (!valid) {
-                res.status(401).write('Password invalid, try again!')
+        if (pw[0].password.length > 0) {
+            let compare = await bcrypt.compare(body.password, pw[0].password)
+            if (!compare) {
+                await res.send("Password incorrect, try again!")
+                return
             }
-            
-            // log in with session token: should expire after 60 minutes
-            await jwt.sign({perms: ['superadmin', 'owner']}, privateKey, { algorithm: 'RS256', expiresIn: '1h' })
+
+            // await jwt.sign({permissions: ["superadmin", "owner"]}, privateKey, { algorithm: 'RS256' })
+            await res.send("Login successful!")
+        } else {
+            await res.send("No user found, try again!")
+            return
         }
     } catch(e) {
         res.status(401).send(e)
