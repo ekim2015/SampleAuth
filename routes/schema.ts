@@ -13,6 +13,15 @@ const regSchema = z.object({
     })
 })
 
+const loginSchema = z.object({
+    username: z.string({
+        required_error: "Username required."
+    }),
+    password: z.string({
+        required_error: "Password required."
+    })
+})
+
 // create custom middleware to handle body validation
 // arrow function into route handler
 const regValidator = (schema) => async (req, res, next) => {
@@ -20,7 +29,7 @@ const regValidator = (schema) => async (req, res, next) => {
     try {
         let body = await res.json(req.body)
         await schema.parseAsync(body)
-        await console.log('Validated!')
+        await res.write('Validated successfully!')
     } catch(e) {
         // could be ZodError or any other error
         res.status(401).send('Validation failed due to ${e}')

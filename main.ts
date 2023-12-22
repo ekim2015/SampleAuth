@@ -4,13 +4,15 @@ const db = require('./dbInit.ts')
 const app = express()
 const port = 8080
 
-const authRoutes = require("./auth/auth.ts")
+const authRoutes = require("./routes/authRoutes.ts")
+const booksRoutes = require("./routes/booksRoutes.ts")
 
 app.use(express.json())
 app.use("/auth", authRoutes)
+app.use("/books", booksRoutes)
 
 app.get('/', (req, res) => {
-    res.send(db)
+    res.send('Welcome!')
 })
 
 // if endpoint does not exist
