@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Boilerplate Backend with Authentication REST API
 
 ## Purpose
@@ -50,3 +51,7 @@ node main.ts
 ```
 
 Use Postman, or other way, to send HTTP requests.
+=======
+# SampleAuth
+Boilerplate code with authentication using Node.js, Express.js, and PostgresSQL
+>>>>>>> 514ea77a7c574efa9e2a7a07e4ed15a3986d3175
